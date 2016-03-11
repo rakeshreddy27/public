@@ -1,0 +1,1 @@
+Application to broadcast the realtime data using websockets and HTML5 canvas.
