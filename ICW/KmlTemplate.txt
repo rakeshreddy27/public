@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+
+  <Document>
+    <name>Points with TimeStamps</name>
+	<Style id="sn_cabs3">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.7</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sh_cabs3">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.816667</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<StyleMap id="msn_cabs3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_cabs3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_cabs3</styleUrl>
+		</Pair>
+	</StyleMap>
+
+	<Style id="sn_cabs2">
+		<IconStyle>
+			<color>ffff0000</color>
+			<scale>0.7</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sh_cabs2">
+		<IconStyle>
+			<color>ffff0000</color>
+			<scale>0.816667</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<StyleMap id="msn_cabs2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_cabs2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_cabs2</styleUrl>
+		</Pair>
+	</StyleMap>
+
+	<StyleMap id="msn_cabs1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_cabs1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_cabs1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_cabs1">
+		<IconStyle>
+			<color>ff00ff00</color>
+			<scale>0.7</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_cabs1">
+		<IconStyle>
+			<color>ff00ff00</color>
+			<scale>0.7</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/cabs.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>

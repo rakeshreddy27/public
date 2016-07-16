@@ -1,7 +1,10 @@
-package base;
+
 import java.awt.geom.Line2D;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Math;
 import java.time.Instant;
@@ -12,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class Icw {
+public class ICW{
 //Radius of Earth in meters
 public static final double RADIUS=6378100;
 //Time to collision
@@ -44,6 +47,7 @@ class rectangle{
 
 //Method to read values from the file 
 	public void readFile(String filePath) {
+		System.out.println("Reading the input file...");
 		int line=0;
 		Boolean first=true;
 		BufferedReader br = null;
@@ -51,7 +55,6 @@ class rectangle{
 		try {
 			br = new BufferedReader(new FileReader(filePath));
 			while ((sCurrentLine = br.readLine()) != null) {
-				//System.out.println(sCurrentLine);
 				if(!first && !"".equals(sCurrentLine)){
 					if(line%2==0)
 						{
@@ -83,7 +86,6 @@ public coordinates GpsToCoordinates(double longi,double lati){
 	coord.x=RADIUS*Math.cos(latitude)*Math.cos(longitude);
 	coord.y=RADIUS*Math.cos(latitude)*Math.sin(longitude);
 	coord.z=RADIUS*Math.sin(latitude);
-	//System.out.println(coord.x+" "+coord.y+" "+coord.z);
 	return coord;
 }
 
@@ -110,12 +112,12 @@ public double time(String dateString1,String dateString2){
 	System.out.println("Error parsing the date");
 	e.printStackTrace();
 	}
-	//System.out.println(Math.abs(seconds));
 	return Math.abs(seconds);
     }
 
 //Method to calculate the coordinate of the rectangle at each second
 public void calculateRectCoor(int vehiclenumber){
+	System.out.println("Calculating the coordinates of rectangle for vehicle"+vehiclenumber+"...");
 	ArrayList<String> inputStrings = null;
 	if(vehiclenumber==1)
 		inputStrings=v1inputStrings;
@@ -150,8 +152,6 @@ public void calculateRectCoor(int vehiclenumber){
 		rect.y4=midPointOtherEndY+(perpToVelYunit*2);
 		if(vehiclenumber==1){
 			v1Rectangles.add(rect);
-			/*System.out.println(rect.x1+" "+rect.y1+" "+rect.x2+" "+rect.y2+" "+
-					+rect.x3+" "+rect.y3+" "+rect.x4+" "+rect.y4);*/
 		}else{
 			v2Rectangles.add(rect);
 		}
@@ -159,6 +159,7 @@ public void calculateRectCoor(int vehiclenumber){
 }
 //Method to calculate probability if two rectangles intersect 
 public void probablity(){
+	System.out.println("Calculating the probability of collision at each time frame...");
 	for(int i=0;i<v1Rectangles.size();i++){
 		boolean collisionProb=false;
 		rectangle rect1=v1Rectangles.get(i);
@@ -189,20 +190,76 @@ public void probablity(){
 	}
 }
 
+//Method to create a output.kml file for the given input
+public void createKML(){
+	System.out.println("Generating the .KML File.....");
+	try{
+	String exampleString="<Placemark><TimeStamp><when>ReplaceTimestamp</when></TimeStamp><styleUrl>"
+			+ "ReplaceIcontype</styleUrl><Point><coordinates>ReplaceCoordinates"
+			+ "</coordinates></Point></Placemark>";
+	String path="output.kml";
+    File file = new File(path);
+    FileWriter fw = new FileWriter(file.getAbsoluteFile());
+    @SuppressWarnings("resource")
+	BufferedWriter bw = new BufferedWriter(fw);
+    @SuppressWarnings("resource")
+	BufferedReader br = new BufferedReader(new FileReader("KmlTemplate.txt"));
+    String sCurrentLine=null;
+    
+    //Write every thing from template to the output file(This includes styles)
+	while ((sCurrentLine = br.readLine()) != null) {
+		bw.write(sCurrentLine+"\n");
+	}
+	
+for(int i=0;i<probability.size();i++){
+	
+	String icon;
+	if(probability.get(i))
+		icon="#msn_cabs3";
+	else
+		icon="#msn_cabs1";
 
-/*
-//Method to calculate haversine distance from latitudes and longitudes
-public double haversine(double lat1, double lon1, double lat2, double lon2) {
-    double dLat = Math.toRadians(lat2 - lat1);
-    double dLon = Math.toRadians(lon2 - lon1);
-    lat1 = Math.toRadians(lat1);
-    lat2 = Math.toRadians(lat2);
-    double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2)
-    		   * Math.cos(lat1) * Math.cos(lat2);
-    double c = 2 * Math.asin(Math.sqrt(a));
-    return RADIUS * c;
+	String[] V1detailsArr = v1inputStrings.get(i).split(",");
+	String finalString= exampleString.replace("ReplaceTimestamp", V1detailsArr[1])
+			.replace("ReplaceIcontype", icon).replace("ReplaceCoordinates",
+					V1detailsArr[2]+","+V1detailsArr[3]+",0");
+	bw.write(finalString+"\n");
 }
-*/
+
+for(String s:v2inputStrings){
+	String[] V2detailsArr = s.split(",");
+	String finalString= exampleString.replace("ReplaceTimestamp", V2detailsArr[1])
+			.replace("ReplaceIcontype", "#msn_cabs2").replace("ReplaceCoordinates",
+					V2detailsArr[2]+","+V2detailsArr[3]+",0");
+	bw.write(finalString+"\n");
+	
+}
+
+bw.write("</Document></kml>\n");
+bw.close();
+br.close();
+
+	}catch(Exception e){
+		System.out.println("Error creating the .KML file");
+		e.printStackTrace();
+	}
+    }
+
+//Running the code
+public static void main(String[] args){
+	if ((args != null) && (args.length > 0)) {
+	    String csvFilePath = (String)args[0];
+	    ICW ic=new ICW();
+		ic.readFile(csvFilePath);
+		ic.calculateRectCoor(1);
+		ic.calculateRectCoor(2);
+		ic.probablity();
+		ic.createKML();
+		System.out.println("Done");
+  } else {
+      System.out.println("Path of csv not given");
+  }
+}
 
 
 }
