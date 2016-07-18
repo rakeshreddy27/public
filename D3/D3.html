@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>D3</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.js"></script>
+<script src="jq.js"></script>
+</head>
+
+<style>
+ .present { fill: black; }
+ .absent { fill: yellow; }
+ 
+.menu {
+        border: 1px solid black;
+        background-color: grey;
+        display: none;
+        position: relative;
+      }
+.personent {
+font-family: "Times New Roman", Times, serif;
+font-size: 10px;
+}
+	  
+
+</style>
+<script>
+
+var contextMenu = function(that, data) {
+		 //console.log(that.getBBox());
+		  //console.log(data.person);	
+		  
+		  $('#person').html(data.person);
+		   $('#entitlement').html(data.entitlement);
+		    $('#status').html(data.status);
+          d3.event.preventDefault();
+		  var cell=d3.select(that);
+		  cell.style("fill","red");
+          //var position = d3.mouse(that);
+		 // console.log(d3.event.pageX+ " "+d3.event.pageY);
+          d3.select('#context-menu')
+                  .style('position', 'absolute')
+                  .style('left', d3.event.pageX+"px" )
+                  .style('top', (d3.event.pageY-20)+"px" )
+                  .style('display', 'inline-block')
+				  .style('opacity',0.9)
+                  .on('mouseleave', function() {
+            d3.select('#context-menu').style('display', 'none');
+			d3.select(that).style("fill",function(data){
+			if(data.status==0){
+			cell.style("fill","yellow");
+			}else{
+			cell.style("fill","black");
+			}
+			});
+          });
+		  
+          d3.select('#context-menu').attr('class', 'menu');
+		  }
+
+
+function myFunction() {
+$.getJSON( "input.json", function( data ) {
+
+var dataset=data.results.user_entitlement_map;
+var userlist=data.results.userid_list;
+var entitlementlist = data.results.entitlementid_list;
+var height=data.results.user_entitlement_map.length;
+var width=data.results.user_entitlement_map[1].length;
+var context = null;
+var cellSize=2;
+var cellSizeActual=1;
+
+
+//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", width*cellSize)
+						.attr("height", height*cellSize);
+
+			svg.selectAll("g")
+			   .data(data.results.user_entitlement_map)
+			   .enter()
+			   .append("g")
+			   .attr("data-person",function(d, j) {
+                     return userlist[j];})
+			   .attr("transform", function(d, j) {
+                     return "translate(0," + j* cellSize + ")";})
+			   .selectAll("rect")
+			   .data(function (d,i) {return d;})
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * cellSize; })
+			   .attr("width", cellSizeActual)
+			   .attr("height", cellSizeActual)
+			   .attr("class","rect")
+			   .attr("data-entitlment",function(d, i) {
+					return entitlementlist[i];
+					})
+				.attr("data-person",function(d) {
+					return $(this).parent().attr('data-person');
+					})
+				.attr("data-status",function(d) {
+					return d;
+					})
+			   .attr("class", function(d) {
+			   		if(d==0){
+					return "absent";
+					}
+					else{return "present"}
+					})
+				.on("contextmenu", function(d) {
+				//console.log(d3.mouse(this)[1]);
+				 //console.log(d3.event.pageY+" "+d3.event.pageX);
+				  data={};
+				  data["person"]=$(this).attr('data-person');
+				  data["entitlement"]=$(this).attr('data-entitlment');
+				  data["status"]=d;
+                  contextMenu(this,data);
+                  d3.event.preventDefault();
+                  });
+});
+
+
+
+}
+</script>
+
+
+<body onload="myFunction()">
+
+
+<div class="json" >
+    <ul  id="context-menu" class="menu">
+      <li class="personent" id="person"></li>
+	  <li class="personent" id="entitlement"></li>
+	  <li class="personent" id="status"></li>
+   </ul>
+  </div>
+
+</body>
+
+</html>
+
+
+			
+			
+			
+		
