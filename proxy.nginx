@@ -8,6 +8,7 @@ events {
 
 env CLIENT_ID;
 env CLIENT_SECRET;
+env AUTH;
 
 http {
     resolver 8.8.8.8 ipv6=off;
@@ -38,7 +39,7 @@ http {
             empowerid_api_key = "6510a7ea-fcf5-4d16-90c9-c0734ed720d9",
             get_results_endpoint = "https://sso.empoweriam.com/api/services/v1/ReverseProxy/GetResults",
             token_endpoint = "https://sso.empoweriam.com/oauth/v2/token",
-            token_endpoint_basic_auth = "cGF0cmljazpwQCQkdzByZA==",
+            token_endpoint_basic_auth = os.getenv("AUTH"),
         }
         require"empowerid.proxy"(opts)
     }
