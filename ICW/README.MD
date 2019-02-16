@@ -3,7 +3,7 @@ This is a program to check if two vehicles are going to collide, given their coo
 
 Compiling : javac ICW.java
 
-Execution : java ICW  <Name of the input csv file>
+Execution : java ICW  <CSVFilePath>
 
 the program outputs an output.kml file
 
