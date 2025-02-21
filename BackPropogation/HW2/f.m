@@ -89,7 +89,7 @@ disp(y);
 
 
 % to draw a boundary
-%{
+
 minmax=importdata('minmax.xls');
 xax=minmax(2):0.05:minmax(1);
 yax=minmax(4):0.05:minmax(3);
@@ -145,6 +145,4 @@ scatter(part1(:,1),part1(:,2));
 title('Boundry Diagram');
 hold;
 scatter(part0(:,1),part0(:,2)); 
-
-%}
 
