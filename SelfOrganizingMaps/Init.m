@@ -103,16 +103,3 @@ mapObj = containers.Map(keySet,valueSet);
  aa{cc(1),cc(2)}=mapObj(highpos(i));
  end
 disp(aa);
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
