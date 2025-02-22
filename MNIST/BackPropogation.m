@@ -76,7 +76,7 @@ error(end+1)=(count*100)/4000;
 
 for j=1:2000
     disp(j);
-    x=randperm(4000,200);
+    x=randperm(4000,epochs);
     trda=traindata(x,:);
     trot=trainoutput(x,:);
 for i=1:epochs
