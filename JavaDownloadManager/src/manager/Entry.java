@@ -16,7 +16,6 @@ public class Entry {
 	public static void main(String[] args) {
 		try {
 			download("http://hagan.okstate.edu/NNDesign.pdf","D:/");
-			//download("http://www.planwallpaper.com/static/images/6855409-download-wallpapers.jpg","D:/");
 		} catch (InterruptedException | ExecutionException | IOException | URISyntaxException e){
 			e.printStackTrace();
 		}
@@ -46,7 +45,8 @@ public class Entry {
         	else{
         		end=quo*i+rem;
         	}
-        System.out.println(i+ " "+start+" "+end);	
+        System.out.println(i+ " "+start+" "+end);
+		// Mapping a range of file to each executor
         Future<Boolean> result = es.submit(new DownloadExecutor(url,
 				(long)start,(long)end,i,file));
 		start=end+1;
