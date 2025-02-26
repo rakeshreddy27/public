@@ -1,7 +1,4 @@
-% Coin Toss Simulation to Determine the Effect of Sample Size (n)
-% We test different values of n and check how the probability of heads converges to 0.5
-
-clc; clear; close all;
+% Testing different values of n and check how the probability of heads converges to 0.5
 
 % Define different values of n (number of coin flips)
 n_values = [10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000];
