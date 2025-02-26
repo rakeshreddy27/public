@@ -1,5 +1,4 @@
-% Bayesian Coin Toss Analysis using MATLAB Built-in Functions
-clear; clc; close all;
+% Bayesian Coin Toss Analysis 
 
 % Define experiment parameters
 n = 1000;          % Total number of coin tosses
