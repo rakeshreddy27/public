@@ -1,4 +1,6 @@
-% Define the parameters of the Beta distribution
+% Not using this in code
+
+% parameters of the Beta distribution
 a = 2;  % Shape parameter alpha
 b = 10;  % Shape parameter beta
 
