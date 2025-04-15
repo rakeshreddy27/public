@@ -1,0 +1,8 @@
+TCPClient.java connects to any of the TCPServerx.java with x from 1 to 6.  Open three command windows so you can run one TCPServer and two or more TCPClient.
+
+Each server echoes the line the user types at TCPClient, which can be done with delays so that the concurrency of the server can be observed.
+
+You also need the three DelayedEcho programs to be compiled and placed in the same directory to run some of the servers.  These DelayedEcho classes implements Runnable, Callable, and CompletionHandler, respectively.
+
+Discuss the experiments you perform and the function of the statement asynchronousServerSocketChannel.accept(null, this); in DelayedEcho3.
+
